@@ -115,6 +115,101 @@ Orders table:
 | 3	| 22456 | 2 |
 | 4	| 24562 | 1 |
 
+## Inlab 5
+
+Student Details:
+| ID | Name | Course |
+|-|-|-|
+| 1041 | Sara | Java |
+| 1204 | Aryan | C++ |
+| 1043 | Sameer | Python |
+| 1032 | Abhijeet | Oracle |
+
+Students Markes:
+| ID | Marks |
+|-|-|
+| 1041 | 65 |
+| 1204 | 55 |
+| 1043 | 73 |
+| 1032 | 62 |
+
+
+## Inlab 6
+
+### Question 1
+
+Give the SQL queries for creation of these tables:
+
+PRODUCTS Table:
+| pro_id | pro_name | Pro_Price | Supplier_id |
+|-|-|-|-|
+| 1 | Mouse | 100 | 2 |
+| 2 | Keyboard | 150 | 1 |
+| 3 | HHD | 1000 | 4 |
+| 4 | Mouse | 200 | 1 |
+| 5 | Keyboard | 100 | 2 |
+| 6 | Mouse | 150 | 3 |
+
+SUPPLIER Table:
+| Supplier_id | Supplier_name |
+|-|-|
+| 1 | DELL |
+| 2 | Lenovo |
+| 3 | HP |
+| 4 | Amazon |
+
+Apply the following Joins using SQL
+a. Inner Join
+b. Equi Join
+c. Natural Join
+d. Cross Join (Cartesian product)
+e. Outer Join ( Left , Right and Full Outer Join)
+
+
+### Question 2
+
+Tutorial Table:
+| id | title | subject | duration | upload_date |
+|-|-|-|-|-|
+| 1 | Select Query | SQL | 4.56 | 2013-08-08 |
+| 2 | Insert Query | SQL | 5.32 | 2013-08-08 |
+| 3 | Arithmetic Operators | SQL | 6.37 | 2013-08-08 |
+| 4 | Logical Operators | SQL | 5.11 | 2013-08-08 |
+| 5 | Order By Clause | SQL | 4.19 | 2013-08-08 |
+| 6 | Functions | C | 5.23 |  2013-04-04 |
+
+
+Tutorial_Info Table:
+| tutorial_id | views | likes | dislikes | shares |
+|-|-|-|-|-|
+| 1 | 15000 | 54 | 13 | 6 |
+| 2 | 12500 | 43 | 21 | 2 |
+| 3 | 17500 | 31 | 29 | 12 |
+| 4 | 16000 | 17 | 0 | 11 |
+| 5 | 85000 | 117 | 10 | 19 |
+| 6 | 112000 | 191 | 46 | 34 |
+
+a. Display tutorial_id, title, duration, views, likes and shares of each  tutorials
+b. Display the title of tutorial disliked by more than 20 members
+c. Display the longest tutorial title with its number of views
+d. Display the title of the last uploaded tutorial with its number of shares.
+f. For each subject sum up its duration along with its count
+g. Display the title of the tutorial by adding its likes, views, shares and subtract with dislikes.
+
+
+### Question 3
+
+Create the following table, where manager is also an employee, stored in the same table:
+
+Columns:
+- id (PRIMARY KEY)
+- emp_name
+- manager_id
+
+Also enter some sample data.
+
+Apply the Self Join to list the employee name along with his manager name whereas manager is also an employee of the same table
+
 # Lab Cycle Sheet
 
 # cycle sheet 1
