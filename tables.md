@@ -210,6 +210,85 @@ Also enter some sample data.
 
 Apply the Self Join to list the employee name along with his manager name whereas manager is also an employee of the same table
 
+---
+
+## Inlab 7
+
+Create the below Relational Database Table and then insert records
+
+### EMP Table
+
+| EMPNO | ENAME | HIREDATE | MGR | SAL | DEPTNO |
+| 7369 | SMITH | 17-DEC-80 | 7902 | 800 | 20 |
+| 7499 | ALLEN | 20-FEB-81 | 7698 | 1600 | 30 |
+| 7521 | WARD | 22-FEB-81 | 7698 | 1250 | 30 |
+| 7566 | JONES | 02-APR-81 | 7839 | 2975 | 20 |
+| 7654 | MARTIN | 28-SEP-81 | 7698 | 1250 | 30 |
+| 7698 | BLAKE | 01-MAY-81 | 7839 | 2850 | 30 |
+| 7782 | CLARK | 09-JUN-81 | 7839 | 2450 | 10 |
+| 7788 | SCOTT | 19-APR-87 | 7566 | 3000 | 20 |
+| 7839 | KING | 17-NOV-81 | | 5000 | 10 |
+| 7844 | TURNER | 08-SEP-81 | 7698 | 1500 | 30 |
+| 7876 | ADAMS | 23-MAY-87 | 7788 | 1100 | 20 |
+| 7900 | JAMES | 03-DEC-81 | 7698 | 950 | 30 |
+| 7902 | FORD | 03-DEC-81 | 7566 | 3000 | 20 |
+| 7934 | MILLER | 23-JAN-82 | 7782 | 1300 | 10 |
+
+### DEPT table
+
+| DEPTNO | DNAME | LOC |
+| 10 | ACCOUNTING | NEW YORK |
+| 20 | RESEARCH | DALLAS |
+| 30 | SALES | CHICAGO |
+| 40 | OPERATIONS | BOSTON |
+
+
+### Execute the Query for the following questions
+1. Find all employees whose departments are located at the location CHICAGO.
+2. Select the name of the employees getting highest salary
+3. List out the List of employees name with ID who are getting above average salary of employees
+4. List out the name of the Employees who are getting the same salary as "FORD" Salary.
+5. List out the deptname of the employee who is getting maximum salary
+6. Find out the name of employee getting second maximum salary
+7. List out the name of the employee working in the Location "BOSTON" or "DALLAS"
+8. List out the Name of the employee who are not working in the Location 'NEW YORK'
+9. Finds all employees whose salaries are greater than the lowest salary of every department.
+10. Finds all employees whose salaries are greater than or equal to the highest salary of every department
+11. Calculate the average of average salary of departments (using subquery in 'from' clause)
+12. Finds the salaries of all employees, their average salary, and the difference between the salary of 
+each employee and the average salary using subquery in 'Select' Clause
+13. Update 10% increase in salary of employee working in the deptname 'Sales'
+14. Delete the employee whose experience is greater than 30 years using subquery
+
+
+### Correlated Sub Query:
+15. List out the department name where there are employees getting minimum salary as Rs1000.
+16. Finds all departments that do not have any employee with the salary greater than 10,000
+17. List out the Employee whose manager name is 'JONES'.
+18. List out the name of every manager.
+19. finds all departments which have at least one employee with the salary is greater than 10,000:
+20. Select employees whose salary is greater than the average salary of all departments.
+
+---
+
+
+## Inlab 8
+
+a. Find the names of all red parts
+b. Find all prices for parts that are red or green. (A part may have different prices from different manufacturers.)
+c. Find the SupplierIDs of all suppliers who supply a part that is red or green
+d. Find the names of all suppliers who supply a part that is red or green.
+
+Use Correlated Sub-Query for the Following
+
+e. For every Parts supplied by the suppliers, List out the price
+f. For Every parts, List out the Supplier Name and Address.
+g. Update the Price of the one pID with Other part PID
+h. Delete the Red coloured parts from the catalog 
+i. Create a copy of PARTS table using Insert with Subquery
+j. For every Part ,list out its price along with deviation of price with average price of all parts
+
+
 # Lab Cycle Sheet
 
 # cycle sheet 1

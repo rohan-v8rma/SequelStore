@@ -28,18 +28,18 @@ CREATE TABLE sample(sample_col INT PRIMARY KEY);
 DROP TABLE sample;
 
 
---Q3
+-- Q3
 
 -- Rename a column
 ALTER TABLE Player RENAME COLUMN player_id TO pid;
 
 
---Q4
+-- Q4
 
 -- Rename the table
 ALTER TABLE Player RENAME TO Players;
 
---Q5
+-- Q5
 
 INSERT INTO Players VALUES (101, 'Sam', 'USA', 6);
 INSERT INTO Players VALUES (103, 'Daniel', 'England', 7);
@@ -49,21 +49,21 @@ INSERT INTO Players VALUES (105, 'Alex', 'Wales', 5);
 INSERT INTO Players VALUES (106, 'Matt', 'Scotland', 3);
 
 
---Q6
+-- Q6
 
 SELECT * FROM Players;
 
 
---Q7
+-- Q7
 
 INSERT INTO Players (pid, country) VALUES (107, 'Germany');
 INSERT INTO Players (pid, country) VALUES (108, 'Brazil');
 
---Q8
+-- Q8
 
 SELECT * FROM Players;
 
---Q9
+-- Q9
 
 ALTER TABLE Players
 ADD gender VARCHAR(20);
@@ -71,41 +71,41 @@ ADD gender VARCHAR(20);
 UPDATE Players 
     SET gender='Male';
 
---Q10
+-- Q10
 
 UPDATE Players 
     SET goals=goals+1;
 
---Q11
+-- Q11
 
 UPDATE Players 
     SET country='ENG' 
     WHERE country='England';
 
---Q12
+-- Q12
 
 UPDATE Players 
     SET country='India' 
     WHERE pid=105;
 
---Q13
+-- Q13
 
 UPDATE Players 
     SET name='Raja' 
     WHERE pid=104;
 
---Q14
+-- Q14
 
 UPDATE Players 
     SET name='Joseph', country='India' 
     WHERE pid=102;
 
---Q15
+-- Q15
 
 DELETE FROM Players 
     WHERE country='France';
 
---Q16
+-- Q16
 
 DELETE FROM Players 
     WHERE goals<3
