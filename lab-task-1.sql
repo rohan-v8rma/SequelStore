@@ -3,7 +3,7 @@ DROP TABLE Publisher;
 
 -- Q1A
 CREATE TABLE Publisher (
-Pub_ID NUMBER(4) PRIMARY KEY,
+Pub_ID NUMBER(4) PRIMARY KEY AUTO_INCREMENT,
 Pub_Name VARCHAR2(25) DEFAULT 'Unknown',
 City VARCHAR2(15) DEFAULT 'Chennai',
 State VARCHAR2(15),
@@ -25,7 +25,7 @@ INSERT INTO Publisher VALUES (5, 'Publisher E', 'Bengaluru', 'Karnataka', 'India
 
 -- Q1B
 CREATE TABLE Journal (
-Paper_ID NUMBER(5) PRIMARY KEY,
+Paper_ID NUMBER(5) PRIMARY KEY AUTO_INCREMENT,,
 Paper_Title VARCHAR2(25),
 Pub_ID NUMBER(4),
 Pub_Date DATE,
