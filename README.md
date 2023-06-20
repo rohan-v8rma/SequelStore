@@ -11,12 +11,14 @@
 
 
 # Syntax for foreign key
+
 CREATE TABLE FREQUENTS (
   NAME VARCHAR2(30) PRIMARY KEY,
   FOREIGN KEY(NAME) REFERENCES PERSON(NAME),
 )
 
 # Composite foreign keys
+
 If a table has a composite primary key, example: (name, age),
 name and age have to be referenced as foreign key together, not separately.
 

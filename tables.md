@@ -352,3 +352,41 @@ W) Display the paper-id sorted based on its amount
 X) Find out the months difference between sysdate and pubdate of every paper
 Y) Display the Pub_date of each paper in terms of its sentences
 Z) Display the pub date with YYYY-MM-DD HH24:MI:SS format
+
+# cycle sheet 2
+
+Consider the Following Relations
+- Person ( name, age, gender ): name is a key
+- Frequents ( name, pizzeria ): (name, pizzeria) is a key
+- Eats ( name, pizza ): (name, pizza) is a key
+- Serves ( pizzeria, pizza, price ): (pizzeria, pizza) is a key
+
+1. Simple Joins:
+- Apply Cross Join, Inner Join, Outer Join to any two of the relevant tables above
+- Apply SET Operations such as Union, Intersection, Minus and Division Operations in relevant tables.
+- Write SQL using Join for solving the following Questions
+    a. Find all pizzerias frequented by at least one person under the age of 18.
+    b. Find the names of all females who eat either mushroom or pepperoni pizza (or both).
+    c. Find the names of all females who eat both mushroom and pepperoni pizza.
+    d. Find all pizzerias that serve at least one pizza that Amy eats for less than $10.00.
+    e. Find all pizzerias that are frequented by only females or only males.
+    f. For each person, find all pizzas the person eats that are not served by any pizzeria the person frequents. Return all such person (name) / pizza pairs.
+    g. Find the names of all people who frequent only pizzerias serving at least one pizza they eat.
+    h. Find the names of all people who frequent every pizzeria serving at least one pizza they eat.
+    i. Find the pizzeria serving the cheapest pepperoni pizza. In the case of ties, return all of the cheapest-pepperoni pizzerias.
+
+
+2. Give 5 Non Correlated and 5 Correlated Sub-Query for the above Relational tables.
+
+- (Non-Correlated Subqueries)
+  - Q2A (All persons who have not frequented any pizzeria)
+  - Q2B (Pizzas that have never been eaten by anyone)
+  - Q2C (Average price of all pizzas served)
+  - Q2D (Pizzerias that serve all types of pizzas)
+  - Q2E (People who have frequented Pizzeria A)
+- (Correlated Subqueries)
+  - Q2F (Persons who have at least one pizzeria that serves what they like)
+  - Q2G (Pizzerias which are only frequented by people younger than 30)
+  - Q2H (Count of persons who have eaten a 'pepperoni' pizza at any of the pizzerias)
+  - Q2I (Names of persons who frequent pizzerias that serve more pizzas than the person eats)
+  - Q2J (People who are less than average age of their gender)
