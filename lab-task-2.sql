@@ -296,7 +296,7 @@ WHERE F.Pizzeria NOT IN (
    ON Serves.pizza = pizzas_F_eats.pizza
 );
 
--- Q1H All pizzerias that serve pepperoni at the lowest cost.
+-- Q1I All pizzerias that serve pepperoni at the lowest cost.
 
 -- Done using subquery
 SELECT Pizzeria
@@ -318,3 +318,92 @@ INNER JOIN (
 ) S2
 ON S1.price = S2.min_cost_of_pepperoni_pizza
 WHERE Pizza = 'pepperoni';
+
+
+
+
+-- Q2 (Non-Correlated Subqueries)
+
+-- Q2A (All persons who have not frequented any pizzeria)
+
+SELECT name
+FROM Person
+WHERE name NOT IN (SELECT name FROM Frequents);
+
+
+-- Q2B (Pizzas that have never been eaten by anyone)
+
+SELECT pizza
+FROM Serves
+WHERE pizza NOT IN (SELECT pizza FROM Eats);
+
+
+-- Q2C (Average price of all pizzas served)
+
+SELECT AVG(price) AS average_price
+FROM Serves;
+
+
+-- Q2D (Pizzerias that serve all types of pizzas)
+SELECT pizzeria
+FROM Serves
+GROUP BY pizzeria
+HAVING COUNT(DISTINCT pizza) = (SELECT COUNT(DISTINCT pizza) FROM Serves);
+
+
+-- Q2E (People who have frequented Pizzeria A)
+
+SELECT Name
+From Frequents
+WHERE Pizzeria = 'Pizzeria A';
+
+
+-- Q2 (Correlated Subqueries)
+
+-- Q2F (Persons who have at least one pizzeria that serves what they like)
+SELECT f.name
+FROM Person f
+WHERE EXISTS (
+  SELECT pizzeria
+  FROM Serves s
+  INNER JOIN (
+    SELECT pizza
+    FROM Eats e
+    WHERE e.name = f.name
+  ) pizzas_f_eats
+  ON pizzas_f_eats.pizza = s.pizza
+);
+
+
+-- Q2G (Pizzerias which are only frequented by people younger than 30)
+SELECT DISTINCT pizzeria 
+FROM frequents
+MINUS
+SELECT pizzeria
+FROM Frequents f
+WHERE (SELECT age FROM Person WHERE name = f.name) > 30;
+
+-- Q2H (Count of persons who have eaten a 'pepperoni' pizza at any of the pizzerias)
+
+SELECT COUNT(*) AS person_count
+FROM Frequents f
+WHERE EXISTS (
+    SELECT name
+    FROM (SELECT name, pizza from Eats where pizza = 'pepperoni') e
+    INNER JOIN 
+    (SELECT pizza from Serves s WHERE s.pizzeria = f.pizzeria) s1
+    ON e.pizza = s1.pizza
+    WHERE e.name = f.name     
+);
+
+-- Q2I (Names of persons who frequent pizzerias that serve more pizzas than the person eats)
+
+SELECT DISTINCT name
+FROM Frequents f
+WHERE (SELECT COUNT(DISTINCT pizza) FROM Serves s WHERE s.pizzeria = f.pizzeria) 
+> (SELECT COUNT(DISTINCT pizza) FROM Eats e WHERE e.name = f.name);
+
+--- Q2J (People who are less than average age of their gender)
+SELECT Name
+FROM Person p1
+WHERE age < (SELECT AVG(age) FROM Person p2 WHERE p2.gender = p1.gender);
