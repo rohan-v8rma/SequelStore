@@ -289,6 +289,16 @@ i. Create a copy of PARTS table using Insert with Subquery
 j. For every Part ,list out its price along with deviation of price with average price of all parts
 
 
+## Inlab 9
+
+- PART-A (Write PL/SQL programs for the following)
+  - Display  small number and  large number of two numbers.
+  - Find simple interest
+  - Find a given number is odd or even
+  - Check whether a date falls on  SUNDAY
+  - Convert a temperature in scale Fahrenheit to Celsius and vice versa
+- PART-B (Repeat the above with the help of procedures and functions in PL/SQL)
+
 # Lab Cycle Sheet
 
 # cycle sheet 1
