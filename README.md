@@ -1,6 +1,7 @@
 # INDEX
 
 - [INDEX](#index)
+- [Important points for PL/SQL](#important-points-for-plsql)
 - [Syntax for foreign key](#syntax-for-foreign-key)
   - [Composite foreign keys](#composite-foreign-keys)
 - [`HAVING and `GROUP BY\`](#having-and-group-by)
@@ -33,7 +34,14 @@
   - [Cursors](#cursors)
     - [1. Implicit Cursors](#1-implicit-cursors)
     - [2. Explicit Cursors](#2-explicit-cursors)
-  - [Triggers](#triggers)
+  - [Triggers \& Exceptions](#triggers--exceptions)
+    - [Undeclared Exceptions](#undeclared-exceptions)
+    - [Custom declared exceptions](#custom-declared-exceptions)
+
+# Important points for PL/SQL
+
+- Write commands first in a 
+- Execute SET SERVEROUTPUT ON to ensure output is visible
 
 
 # Syntax for foreign key
@@ -435,7 +443,9 @@ END;
 
 ## Cursors
 
-In PL/SQL, a cursor is a named private SQL area that stores the information needed to process a specific SQL statement. It allows you to retrieve and manipulate multiple rows of data from a result set returned by a SELECT statement.
+Oracle creates a memory area, known as the context area, for processing an SQL statement, which contains all the information needed for processing the statement; for example, the number of rows processed, etc.
+
+A cursor is a pointer to this context area. PL/SQL controls the context area through a cursor. A cursor holds the rows (one or more) returned by a SQL statement. The set of rows the cursor holds is referred to as the active set.
 
 A cursor provides a way to iterate over the result set and perform operations on each row individually. It allows you to fetch one or more rows from the result set, process them, and then move to the next row until all rows have been processed.
 
@@ -446,6 +456,21 @@ There are two types of cursors in PL/SQL:
 ### 1. Implicit Cursors
 
 Implicit cursors are automatically created by the PL/SQL engine for each SQL statement executed in a PL/SQL block. They are used for simple, one-time queries and do not require explicit declaration or management by the programmer.
+
+Whenever a DML statement (INSERT, UPDATE and DELETE) is issued, an implicit cursor is associated with this statement. 
+
+- For INSERT operations, the cursor holds the data that needs to be inserted. 
+- For UPDATE and DELETE operations, the cursor identifies the rows that would be affected.
+
+In PL/SQL, you can refer to the most recent implicit cursor as the SQL cursor, which always has attributes such as %FOUND, %ISOPEN, %NOTFOUND, and %ROWCOUNT,
+
+| S.No | Attribute    | Description |
+|-|-|-|
+| 1    | %FOUND       | Returns TRUE if an INSERT, UPDATE, or DELETE statement affected one or more rows or a SELECT INTO statement returned one or more rows. Otherwise, it returns FALSE. |
+| 2    | %NOTFOUND    | The logical opposite of %FOUND. It returns TRUE if an INSERT, UPDATE, or DELETE statement affected no rows, or a SELECT INTO statement returned no rows. Otherwise, it returns FALSE. |   
+| 3    | %ISOPEN      | Always returns FALSE for implicit cursors, because Oracle closes the SQL cursor automatically after executing its associated SQL statement.     |
+| 4    | %ROWCOUNT    | Returns the number of rows affected by an INSERT, UPDATE, or DELETE statement, or returned by a SELECT INTO statement. |
+
 
 ### 2. Explicit Cursors
 
@@ -496,7 +521,7 @@ END;
 In this example, an explicit cursor named `c_employees` is declared to select employee details from the `employees` table for a specific department. The cursor is opened, and then a loop is used to fetch and process each row from the result set. Finally, the cursor is closed to release the associated resources.
 
 
-## Triggers
+## Triggers & Exceptions
 
 ```sql
 CREATE [OR REPLACE ] TRIGGER trigger_name  
@@ -514,4 +539,64 @@ BEGIN
 EXCEPTION 
    Exception-handling-statements 
 END; 
+```
+
+### Undeclared Exceptions
+
+```sql
+CREATE OR REPLACE TRIGGER book_trigger
+-- This means we perform the check before inserting/updating the received data.
+BEFORE INSERT OR UPDATE ON book
+-- Perform this check for each row of the inserted data.
+FOR EACH ROW
+DECLARE
+  req_count INT;
+BEGIN
+  IF :new.editor IS NOT NULL THEN
+    SELECT COUNT(author_id) INTO req_count
+    FROM author
+    WHERE author_id = :new.editor;
+
+    IF req_count = 0 THEN 
+      -- We can use this method to raise exceptions without declaring them.
+      RAISE_APPLICATION_ERROR(-20002, 'Invalid editor value');
+    END IF;
+  END IF;
+EXCEPTION
+  -- This is for catching any undeclared errors.
+  WHEN OTHERS THEN
+    -- SQLERRM is the message with which the error was raised
+    dbms_output.put_line('An error occurred: ' || SQLERRM);
+END;
+/
+```
+
+### Custom declared exceptions
+
+```sql
+CREATE OR REPLACE TRIGGER book_trigger
+-- This means we perform the check before inserting/updating the received data.
+BEFORE INSERT OR UPDATE ON book
+-- Perform this check for each row of the inserted data.
+FOR EACH ROW
+DECLARE
+  req_count INT;
+  trigger_exception EXCEPTION;
+BEGIN
+  IF :new.editor IS NOT NULL THEN
+    SELECT COUNT(author_id) INTO req_count
+    FROM author
+    WHERE author_id = :new.editor;
+
+    IF req_count = 0 THEN 
+      -- Raising the declared exception
+      RAISE trigger_exception;
+    END IF;
+  END IF;
+EXCEPTION
+  -- Handling the declared Exception
+  WHEN trigger_exception THEN
+    dbms_output.put_line('The editor value is NOT valid');
+END;
+/
 ```
