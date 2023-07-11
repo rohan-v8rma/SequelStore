@@ -288,7 +288,6 @@ h. Delete the Red coloured parts from the catalog
 i. Create a copy of PARTS table using Insert with Subquery
 j. For every Part ,list out its price along with deviation of price with average price of all parts
 
-
 ## Inlab 9
 
 - PART-A (Write PL/SQL programs for the following)
@@ -298,6 +297,14 @@ j. For every Part ,list out its price along with deviation of price with average
   - Check whether a date falls on  SUNDAY
   - Convert a temperature in scale Fahrenheit to Celsius and vice versa
 - PART-B (Repeat the above with the help of procedures and functions in PL/SQL)
+
+## Inlab 10
+
+1. Create a Table Employee with necessary Schema
+
+a. Write 3 Triggers one for firing during insertion, one for deletion and one for updation. The Trigger should display the Day of the Insertion/deletion/updation.
+
+b. Create a trigger that will file when an updation of column 'Salary' happens, the difference between new and old value should not be 25000.
 
 # Lab Cycle Sheet
 
