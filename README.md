@@ -13,16 +13,27 @@
   - [DECLARE section](#declare-section)
     - [Syntax for variable declaration](#syntax-for-variable-declaration)
     - [`%type` declaration](#type-declaration)
+    - [`%rowtype` declaration](#rowtype-declaration)
   - [Displaying output](#displaying-output)
   - [Executable section (between BEGIN and END)](#executable-section-between-begin-and-end)
-    - [`SELECT INTO` clause](#select-into-clause)
-    - [PL SQL Operator Precedence](#pl-sql-operator-precedence)
-    - [Conditional Statements](#conditional-statements)
-      - [`IF-THEN` statement](#if-then-statement)
-      - [`IF-THEN-ELSE` statement](#if-then-else-statement)
-      - [`IF-THEN-ELSIF` statement](#if-then-elsif-statement)
-      - [`CASE` statement](#case-statement)
-      - [Nested `IF-THEN-ELSE` statement](#nested-if-then-else-statement)
+  - [`SELECT INTO` clause](#select-into-clause)
+  - [PL SQL Operator Precedence](#pl-sql-operator-precedence)
+  - [Conditional Statements](#conditional-statements)
+    - [`IF-THEN` statement](#if-then-statement)
+    - [`IF-THEN-ELSE` statement](#if-then-else-statement)
+    - [`IF-THEN-ELSIF` statement](#if-then-elsif-statement)
+    - [`CASE` statement](#case-statement)
+    - [Nested `IF-THEN-ELSE` statement](#nested-if-then-else-statement)
+  - [Looping statements](#looping-statements)
+    - [For-loop](#for-loop)
+    - [While-loop](#while-loop)
+  - [Sub-programs](#sub-programs)
+    - [Procedures](#procedures)
+    - [Functions](#functions)
+  - [Cursors](#cursors)
+    - [1. Implicit Cursors](#1-implicit-cursors)
+    - [2. Explicit Cursors](#2-explicit-cursors)
+  - [Triggers](#triggers)
 
 
 # Syntax for foreign key
@@ -154,6 +165,23 @@ Correlated subqueries are useful when you need to perform row-by-row comparisons
 
 - If the data type of the table column changes, the variables declared using `%type` will automatically update to match the new data type, ensuring compatibility between the variables and the table structure.
 
+### `%rowtype` declaration
+
+```sql
+DECLARE 
+   customer_rec customers%rowtype; 
+BEGIN 
+   SELECT * into customer_rec 
+   FROM customers 
+   WHERE id = 5;  
+   dbms_output.put_line('Customer ID: ' || customer_rec.id); 
+   dbms_output.put_line('Customer Name: ' || customer_rec.name); 
+   dbms_output.put_line('Customer Address: ' || customer_rec.address); 
+   dbms_output.put_line('Customer Salary: ' || customer_rec.salary); 
+END; 
+/
+```
+
 ---
 
 ## Displaying output
@@ -171,7 +199,7 @@ Correlated subqueries are useful when you need to perform row-by-row comparisons
 
 - Mandatory
 
-### `SELECT INTO` clause
+## `SELECT INTO` clause
 
 ```sql
 DECLARE 
@@ -193,13 +221,13 @@ If multiple customers have the same `id` value as `c_id`, the SELECT statement w
 
 The code does not handle multiple matches or iterate through multiple results.
 
-### PL SQL Operator Precedence
+## PL SQL Operator Precedence
 
 ![](pl-sql-operator-precedence.png)
 
-### Conditional Statements
+## Conditional Statements
 
-#### `IF-THEN` statement
+### `IF-THEN` statement
 
 - Example 1:
   ```sql
@@ -237,7 +265,7 @@ The code does not handle multiple matches or iterate through multiple results.
   /
   ```
 
-#### `IF-THEN-ELSE` statement
+### `IF-THEN-ELSE` statement
 
 Example:
 ```sql
@@ -256,7 +284,7 @@ END;
 /
 ```
 
-#### `IF-THEN-ELSIF` statement
+### `IF-THEN-ELSIF` statement
 
 ```sql
 DECLARE 
@@ -276,7 +304,7 @@ END;
 / 
 ```
 
-#### `CASE` statement
+### `CASE` statement
 
 ```sql
 DECLARE 
@@ -294,7 +322,7 @@ END;
 /
 ```
 
-#### Nested `IF-THEN-ELSE` statement
+### Nested `IF-THEN-ELSE` statement
 
 ```sql
 DECLARE 
@@ -317,3 +345,173 @@ END;
 
 ---
 
+## Looping statements
+
+- LOOP keyword denotes start of looping block.
+
+### For-loop
+
+```sql
+DECLARE 
+   i number(1); 
+   j number(1); 
+BEGIN 
+ 
+   FOR i IN 1..3 LOOP 
+      FOR j IN 1..3 LOOP 
+         dbms_output.put_line('i is: '|| i || ' and j is: ' || j); 
+      END LOOP; 
+   END LOOP; 
+END; 
+/
+```
+
+### While-loop
+
+```sql
+DECLARE
+   counter NUMBER := 1;
+BEGIN
+   LOOP
+      -- Print the current value of counter
+      dbms_output.put_line('Counter: ' || counter);
+      
+      counter := counter + 1;
+      
+      -- Exit the loop when counter reaches 6
+      EXIT WHEN counter > 5;
+   END LOOP;
+END;
+```
+
+---
+
+## Sub-programs
+
+- Procedures and Functions are known as Sub-programs in PL SQL. 
+- Only difference is that functions have a return value, while procedures don't.
+  
+  Although procedures can still return a value, albeit indirectly using OUT parameters.
+- The use of `IS` or `AS` keyword is purely based on preference. 
+  
+  Variable declarations come after `IS`/`AS` and before the `BEGIN` clause.
+
+### Procedures
+
+1. Creating a Procedure:
+    ```sql
+    CREATE [OR REPLACE] PROCEDURE procedure_name 
+    [(parameter_name [IN | OUT | IN OUT] type [, ...])] 
+    {IS | AS} 
+    -- Variable declarations over here.
+    BEGIN 
+      < procedure_body > 
+    END [procedure_name]; 
+    ```
+2. Dropping a Procedure:
+    ```sql
+    DROP PROCEDURE procedure-name;
+    ```
+
+
+### Functions
+
+1. Creating a Function:
+    ```sql
+    CREATE [OR REPLACE] FUNCTION function_name 
+    [(parameter_name [IN | OUT | IN OUT] type [, ...])] 
+    RETURN return_datatype 
+    {IS | AS} 
+    -- Variable declarations over here.
+    BEGIN 
+      < function_body > 
+    END [function_name];
+    ```
+
+2. Dropping a Function:
+    ```sql
+    DROP FUNCTION function-name;
+    ```
+
+## Cursors
+
+In PL/SQL, a cursor is a named private SQL area that stores the information needed to process a specific SQL statement. It allows you to retrieve and manipulate multiple rows of data from a result set returned by a SELECT statement.
+
+A cursor provides a way to iterate over the result set and perform operations on each row individually. It allows you to fetch one or more rows from the result set, process them, and then move to the next row until all rows have been processed.
+
+Cursors are particularly useful when you need to perform operations on a set of data that cannot be easily achieved with a single SQL statement or when you want to process data row by row. They provide a mechanism for fetching and processing data in a controlled manner.
+
+There are two types of cursors in PL/SQL:
+
+### 1. Implicit Cursors
+
+Implicit cursors are automatically created by the PL/SQL engine for each SQL statement executed in a PL/SQL block. They are used for simple, one-time queries and do not require explicit declaration or management by the programmer.
+
+### 2. Explicit Cursors
+
+Explicit cursors are explicitly declared and managed by the programmer. They provide more control and flexibility over the result set. You can define an explicit cursor, open it, fetch rows from it, and close it as needed. Explicit cursors are typically used when you need to perform complex operations or when you want to fetch and process data row by row.
+
+The basic steps involved in using an explicit cursor are as follows:
+
+1. Declare the cursor: Define the cursor by giving it a name and specifying the SELECT statement that defines the result set.
+
+2. Open the cursor: Open the cursor to establish the result set.
+
+3. Fetch rows from the cursor: Retrieve one or more rows from the result set into variables or records.
+
+4. Process the fetched rows: Perform operations on the fetched data.
+
+5. Close the cursor: Close the cursor when you are done processing the result set.
+
+Here's an example of using an explicit cursor to fetch and process rows from a result set:
+
+```sql
+DECLARE
+   CURSOR c_employees IS
+      SELECT employee_id, first_name, last_name
+      FROM employees
+      WHERE department_id = 100;
+      
+   v_employee_id employees.employee_id%TYPE;
+   v_first_name employees.first_name%TYPE;
+   v_last_name employees.last_name%TYPE;
+BEGIN
+   OPEN c_employees;
+   
+   LOOP
+      FETCH c_employees INTO v_employee_id, v_first_name, v_last_name;
+      
+      EXIT WHEN c_employees%NOTFOUND;
+      
+      -- Process the fetched data
+      dbms_output.put_line('Employee ID: ' || v_employee_id);
+      dbms_output.put_line('First Name: ' || v_first_name);
+      dbms_output.put_line('Last Name: ' || v_last_name);
+   END LOOP;
+   
+   CLOSE c_employees;
+END;
+```
+
+In this example, an explicit cursor named `c_employees` is declared to select employee details from the `employees` table for a specific department. The cursor is opened, and then a loop is used to fetch and process each row from the result set. Finally, the cursor is closed to release the associated resources.
+
+
+## Triggers
+
+```sql
+CREATE [OR REPLACE ] TRIGGER trigger_name  
+{BEFORE | AFTER | INSTEAD OF }  
+{INSERT [OR] | UPDATE [OR] | DELETE}  
+[OF col_name]  
+ON table_name  
+[REFERENCING OLD AS o NEW AS n]  
+[FOR EACH ROW]  
+WHEN (condition)   
+DECLARE 
+   Declaration-statements 
+BEGIN  
+   Executable-statements 
+EXCEPTION 
+   Exception-handling-statements 
+END; 
+```
