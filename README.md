@@ -2,6 +2,9 @@
 
 - [INDEX](#index)
 - [Important points for PL/SQL](#important-points-for-plsql)
+- [`ALTER TABLE` snippets](#alter-table-snippets)
+  - [Commands that require `COLUMN` suffix](#commands-that-require-column-suffix)
+  - [Commands that don't require `COLUMN` suffix](#commands-that-dont-require-column-suffix)
 - [Syntax for foreign key](#syntax-for-foreign-key)
   - [Composite foreign keys](#composite-foreign-keys)
 - [`HAVING and `GROUP BY\`](#having-and-group-by)
@@ -43,6 +46,36 @@
 - Write commands first in a 
 - Execute SET SERVEROUTPUT ON to ensure output is visible
 
+---
+
+# `ALTER TABLE` snippets
+
+## Commands that require `COLUMN` suffix
+
+```sql
+-- DROP a column
+ALTER TABLE Player DROP COLUMN age;
+DESC Player;
+
+-- Rename a column
+ALTER TABLE Player RENAME COLUMN player_id TO pid;
+```
+
+## Commands that don't require `COLUMN` suffix
+
+```sql
+-- Rename the table
+ALTER TABLE Player RENAME TO Players;
+
+-- MODIFY a column
+ALTER TABLE Player MODIFY goals INT DEFAULT 0;
+DESC Player;
+
+ALTER TABLE Player ADD age INT;
+DESC Player;
+```
+
+---
 
 # Syntax for foreign key
 
