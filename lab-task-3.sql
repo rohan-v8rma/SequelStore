@@ -212,7 +212,7 @@ BEFORE INSERT OR UPDATE ON book
 FOR EACH ROW
 DECLARE
   req_count INT;
-  trigger_exception EXCEPTION;
+  -- trigger_exception EXCEPTION;
 BEGIN
   IF :new.editor IS NOT NULL THEN
     SELECT COUNT(author_id) INTO req_count
@@ -220,12 +220,14 @@ BEGIN
     WHERE author_id = :new.editor;
 
     IF req_count = 0 THEN 
-      RAISE trigger_exception;
+      -- RAISE trigger_exception;
+      RAISE_APPLICATION_ERROR(-20002, 'Invalid editor value');
     END IF;
   END IF;
 EXCEPTION
   WHEN trigger_exception THEN
-    dbms_output.put_line('The editor value is NOT valid');
+    -- dbms_output.put_line('The editor value is NOT valid');
+    dbms_output.put_line('An error occurred: ' || SQLERRM);
 END;
 /
 

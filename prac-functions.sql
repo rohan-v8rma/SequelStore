@@ -1,3 +1,4 @@
+-- Simple function (It is necessary that the return value is assigned somewhere)
 CREATE OR REPLACE FUNCTION Y
 (A IN INT) 
 RETURN INT
