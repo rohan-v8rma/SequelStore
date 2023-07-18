@@ -27,7 +27,7 @@ SELECT DEPT, COUNT(*) AS EmployeeCount
 FROM employee 
 GROUP BY DEPT;
 --Q3
-SELECT DEPT, COUNT(*) AS EmployeeCount, GROUP_CONCAT(ENAME) AS EmployeeNames 
+SELECT DEPT, COUNT(*) AS EmployeeCount
 FROM employee 
 GROUP BY DEPT;
 --Q4
@@ -42,7 +42,7 @@ FROM (
   SELECT DEPT, DESIGNATION, MAX(SALARY) AS MaxSalary 
   FROM employee 
   GROUP BY DEPT, DESIGNATION
-) AS MaxSalaries 
+) MaxSalaries 
 GROUP BY DEPT;
 
 --Q7

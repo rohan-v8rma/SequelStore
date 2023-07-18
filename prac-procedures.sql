@@ -1,0 +1,13 @@
+-- Simple procedure
+CREATE OR REPLACE PROCEDURE X
+(a INT) IS
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(a);
+END;
+/
+BEGIN
+    X(10);
+END;
+/
+
+-- 
