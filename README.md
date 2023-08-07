@@ -7,7 +7,7 @@
   - [Commands that don't require `COLUMN` suffix](#commands-that-dont-require-column-suffix)
 - [Syntax for foreign key](#syntax-for-foreign-key)
   - [Composite foreign keys](#composite-foreign-keys)
-- [`HAVING and `GROUP BY\`](#having-and-group-by)
+- [`HAVING` and `GROUP BY`](#having-and-group-by)
 - [Correlated Sub-query Examples](#correlated-sub-query-examples)
   - [Example 1](#example-1)
   - [Example 2](#example-2)
@@ -89,7 +89,7 @@ CREATE TABLE FREQUENTS (
 If a table has a composite primary key, example: (name, age),
 name and age have to be referenced as foreign key together, not separately.
 
-# `HAVING and `GROUP BY`
+# `HAVING` and `GROUP BY`
 
 GROUP BY is always needed whenever we need to use the HAVING clause.
 
